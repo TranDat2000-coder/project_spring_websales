@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Home Admin</title>
+
+	<th:block th:insert="~{admin/common/link :: link}"></th:block>
+	
+</head>
+<body>
+	<div class="container-scroller">
+	
+		<!-- partial:partials/_navbar.html -->
+		<nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row" th:insert="~{admin/common/navbar.html :: navbar}">
+		</nav>
+		
+		<div class="container-fluid page-body-wrapper">
+			
+			<!-- partial:partials/_sidebar.html -->
+			<nav class="sidebar sidebar-offcanvas" id="sidebar" th:insert="~{admin/common/sidebar.html :: sidebar}">
+			</nav>
+			
+			<div class="main-panel">
+				<div class="content-wrapper">
+					<div class="row">
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	
+	<th:block th:insert="~{admin/common/script :: script}"></th:block>
+	
+</body>
+</html>

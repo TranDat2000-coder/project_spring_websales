@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Thêm thể loại</title>
+
+	<th:block th:insert="~{admin/common/link :: link}"></th:block>
+
+</head>
+
+<body>
+
+	<div class="container-scroller">
+
+		<!-- partial:partials/_navbar.html -->
+		<nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row"
+			th:insert="~{admin/common/navbar.html :: navbar}">
+		</nav>
+
+		<div class="container-fluid page-body-wrapper">
+
+			<!-- partial:partials/_sidebar.html -->
+			<nav class="sidebar sidebar-offcanvas" id="sidebar" th:insert="~{admin/common/sidebar.html :: sidebar}">
+			</nav>
+
+			<div class="main-panel">
+				<div class="content-wrapper">
+					<div class="page-header">
+						<h3 class="page-title"> Form elements </h3>
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="#">Forms</a></li>
+								<li class="breadcrumb-item active" aria-current="page">Form elements</li>
+							</ol>
+						</nav>
+					</div>
+					<div>
+						<form th:action="@{/admin/category-product}" th:method="POST">
+							<div class="row" th:object="${addCategory}">
+								<div class="col-md-12 grid-margin stretch-card">
+									<div class="card">
+										<div class="card-body">
+											<h4 class="card-title">Thêm chi tiết thể loại</h4>
+											<p class="card-description"> Basic form layout </p>
+
+											<div class="form-group">
+												<label for="nameProduct">Tên thể loại</label>
+												<input type="text" class="form-control" id="nameCategory" name="name"
+													field="*{name}">
+											</div>
+											<div class="form-group">
+												<label for="nameProduct">Mã thể loại</label>
+												<input type="text" class="form-control" id="nameCategory" name="code"
+													placeholder="VD: sam-sung, i-phone" field="*{code}">
+											</div>
+											<div class="form-group">
+												<label for="shortdescription">Nội dung thể loại</label> <br>
+												<textarea class="shortdescription mt-2 short-them" name="content"
+													rows="4" cols="50" field="*{content}">
+												</textarea>
+											</div>
+											<button type="submit" class="btn btn-primary mr-2">Lưu</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<th:block th:insert="~{admin/common/script :: script}"></th:block>
+</body>
+
+</html>
