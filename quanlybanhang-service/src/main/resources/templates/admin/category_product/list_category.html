@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Danh sách thể loại</title>
+
+	<th:block th:insert="~{admin/common/link :: link}"></th:block>
+
+</head>
+
+<body>
+
+	<div class="container-scroller">
+
+		<!-- partial:partials/_navbar.html -->
+		<nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row"
+			th:insert="~{admin/common/navbar.html :: navbar}">
+		</nav>
+
+		<div class="container-fluid page-body-wrapper">
+
+			<!-- partial:partials/_sidebar.html -->
+			<nav class="sidebar sidebar-offcanvas" id="sidebar" th:insert="~{admin/common/sidebar.html :: sidebar}">
+			</nav>
+
+			<div class="main-panel">
+				<div class="content-wrapper">
+					<div class="row">
+						<div class="col-lg-12 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body">
+									<h4 class="card-title">Striped Table</h4>
+									<p class="card-description"> Add class <code>.table-striped</code></p>
+									<a th:href="@{/admin/category-product}">Thêm thể loại</a>
+									<table class="table table-striped">
+										<thead>
+											<tr>
+												<th> Tên thể loại</th>
+												<th> Mã thể loại </th>
+												<th> Nội dung </th>
+												<th> Thao tác </th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="listCate : ${listCategory}">
+												<td class="py-1">
+													<p th:text="${listCate.getName()}"></p>
+												</td>
+												<td>
+													<p th:text="${listCate.getCode()}"></p>
+												</td>
+												<td>
+													<p th:text="${listCate.getContent()}"></p>
+												</td>
+												<td>
+													<a href="" title="Sửa" class="edit"><i class="fa fa-pencil-square-o"
+															aria-hidden="true"></i></a>
+													<a href="" title="Xóa"><i class="fa fa-trash"
+															aria-hidden="true"></i></a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<th:block th:insert="~{admin/common/script :: script}"></th:block>
+</body>
+
+</html>

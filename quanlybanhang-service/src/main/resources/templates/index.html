@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<ul th:each = "product : ${listProduct}">
+		<li th:text="${product.getNamePhone()}"></li>
+		<li th:text="${product.getPrice()}"></li>
+		<li th:text="${product.getPriceSale()}"></li>
+	</ul>
+	
+</body>
+</html>

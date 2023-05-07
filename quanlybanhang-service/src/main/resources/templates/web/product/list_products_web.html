@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ</title>
+    <th:block th:insert="~{/web/common/link.html :: link}"></th:block>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="navigation fixed-top" th:insert="~{web/common/header.html :: header}">
+    </header>
+    <!-- end Header -->
+
+    <!-- Banner -->
+    <div class="banner text-center" th:insert="~{web/common/banner.html :: banner}">
+    </div>
+    <!-- end Banner -->
+
+    <section class="section pb-0">
+        <div class="container">
+            <div class="row">
+            	<div class="col-3">
+            		<!-- Sidebar category -->
+				    <div th:insert="~{web/common/sidebar.html :: sidebar}">
+				    </div>
+				    <!-- end sidebar category -->
+            	</div>
+                <div class="col-9">
+                	<!-- <form th:action="@{/list-product-by-category?categoryId={id}(id = ${param.categoryId})}" method="GET"> -->
+                		<div style="display: flex">
+                		<div th:each="product : ${listProduct}">
+                			<a th:href="@{/TMDT/product/product_detail?id={id}(id = ${product.getId()})}">
+               				<div class="card" style="width: 18rem; margin-right: 15px">
+							  <img class="card-img-top" th:src="@{${'/TMDT/product/image/display/' + product.id}}" alt="Card image cap">
+							  <div class="card-body">
+							    <h5 class="card-title" th:text="${product.namePhone}"></h5>
+							    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							    <a href="#" class="btn btn-primary">Go somewhere</a>
+							 </div>
+						</div>
+               			</a>   
+                		</div>
+               			
+               		</div> 
+                	<!-- </form> -->           	
+                	
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <th:block th:insert="~{/web/common/script.html :: script}"></th:block>
+</body>
+
+</html>
