@@ -1,30 +1,76 @@
 package com.project.quanlybanhang.model.response;
 
-import lombok.Data;
-import org.springframework.http.HttpStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.OptBoolean;
+import org.apache.logging.log4j.ThreadContext;
 
 import java.io.Serializable;
+import java.util.Date;
 
-@Data
 public class ResponseData<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private int status;
+    private int code;
     private String message;
-    private String error;
+
+    @JsonFormat(
+        shape = JsonFormat.Shape.STRING,
+        pattern = "yyyy-MM-dd HH:mm:ss",
+        lenient = OptBoolean.FALSE
+    )
+    private Date timestamp = new Date();
     private T data;
 
-    public static <T> ResponseData<T> ok(T data){
-        return restResult(data, HttpStatus.OK.value(), (String)null, (String)null);
+    public ResponseData(){}
+
+    public ResponseData<T> success(T data){
+        this.code = 200;
+        this.message = "Success!";
+        this.data = data;
+        return this;
     }
 
-    private static <T> ResponseData<T> restResult(T data, int status, String message, String error){
-        ResponseData<T> apiResult = new ResponseData<>();
-        apiResult.setStatus(status);
-        apiResult.setMessage(message);
-        apiResult.setError(error);
-        apiResult.setData(data);
-        return apiResult;
+    public ResponseData<T> error(int code, String message){
+        this.code = code;
+        this.message = message;
+        return this;
+    }
+
+    public int getCode() {
+        return this.code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return this.message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Date getTimestamp() {
+        return this.timestamp;
+    }
+
+    @JsonFormat(
+            shape = JsonFormat.Shape.STRING,
+            pattern = "yyyy-MM-dd HH:mm:ss",
+            lenient = OptBoolean.FALSE
+    )
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
     }
 }

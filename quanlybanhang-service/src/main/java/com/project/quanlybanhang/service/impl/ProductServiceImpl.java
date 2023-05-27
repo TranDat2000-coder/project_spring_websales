@@ -5,11 +5,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import com.project.quanlybanhang.common.StatusErrorCode;
+import com.project.quanlybanhang.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.quanlybanhang.convert.ProductConvert;
@@ -33,15 +37,22 @@ public class ProductServiceImpl implements IProductService {
 	private CateProductRepository cateProductRepository;
 	
 	@Override
-	public List<ProductModel> findAll() {
-		List<ProductsEntity> productsEntity = productRepository.findAll(); 
+	public List<ProductModel> findAll() throws BusinessException{
+
+		List<ProductsEntity> productsEntity = productRepository.findAll();
+
 		List<ProductModel> productModel = new ArrayList<ProductModel>();
-		for (ProductsEntity entity : productsEntity) {
-			ProductModel dto = new ProductModel();
-			dto = productConvert.toDTO(entity);
-			productModel.add(dto);
+
+		if(!CollectionUtils.isEmpty(productsEntity)){
+			throw new BusinessException(StatusErrorCode.DATA_NOT_EXITS);
+		}else{
+			for (ProductsEntity entity : productsEntity) {
+				ProductModel dto = new ProductModel();
+				dto = productConvert.toDTO(entity);
+				productModel.add(dto);
+			}
+			return productModel;
 		}
-		return productModel;
 	}
 
 	@Override

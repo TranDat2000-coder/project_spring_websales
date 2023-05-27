@@ -5,11 +5,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
+import com.project.quanlybanhang.model.response.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +25,10 @@ import com.project.quanlybanhang.service.ICateProductService;
 import com.project.quanlybanhang.service.IProductService;
 import com.project.quanlybanhang.utils.CommonConstant;
 
-@Controller
-//@RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/admin")
-public class ProductsAPI {
+@RestController
+public class ProductsController {
 	
 	@Autowired
 	private IProductService productService;
@@ -38,11 +40,9 @@ public class ProductsAPI {
 	private ProductRepository productRepository;
 	
 	@GetMapping(value = "/danh-sach-san-pham")
-	public String listProduct(Model model) {
-//		List<ProductsEntity> result = productRepository.getLimit();
-//		System.out.println(result);
-		model.addAttribute("listProduct", productService.findAll());
-		return "admin/product/list_products";
+	public ResponseData<?> listProduct(Model model) {
+		List<ProductModel> results = productService.findAll();
+		return new ResponseData().success(results);
 	}
 	
 	@GetMapping(value = "/san-pham")
