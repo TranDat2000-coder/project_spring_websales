@@ -17,7 +17,7 @@ function Sidebar() {
     const items = [
         getItem("Quản lý sản phẩm", "sub1", [
             getItem(<a className="nav-link" href="/product-list">Danh sách sản phẩm</a>, "a1"),
-            getItem("Thêm sách sản phẩm", "a2")
+            getItem(<a className="nav-link" href="">Thêm sách sản phẩm</a>, "a2")
         ]),
         getItem("Quản lý thể loại", "sub2", [
             getItem("Danh sách sản phẩm", "b1"),

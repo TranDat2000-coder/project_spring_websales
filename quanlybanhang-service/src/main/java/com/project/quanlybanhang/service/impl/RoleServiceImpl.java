@@ -16,26 +16,31 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     public Iterable<RoleEntity> findAll() {
+
         return roleRepository.findAll();
     }
 
     @Override
     public Optional<RoleEntity> findById(Long id) {
+
         return roleRepository.findById(id);
     }
 
     @Override
     public RoleEntity save(RoleEntity roleEntity) {
+
         return roleRepository.save(roleEntity);
     }
 
     @Override
     public void remove(Long id) {
+
         roleRepository.deleteById(id);
     }
 
     @Override
     public RoleEntity findByName(String name) {
+
         return roleRepository.findByName(name);
     }
 }

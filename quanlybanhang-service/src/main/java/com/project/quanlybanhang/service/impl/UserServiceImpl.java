@@ -1,8 +1,11 @@
 package com.project.quanlybanhang.service.impl;
 
+import java.util.Arrays;
 import java.util.Optional;
 
+import com.project.quanlybanhang.entities.RoleEntity;
 import com.project.quanlybanhang.model.UserPrinciple;
+import com.project.quanlybanhang.model.UsersModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,7 +21,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Autowired
 	private UsersRepository usersRepository;
-	
+
 	@Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
@@ -42,22 +45,22 @@ public class UserServiceImpl implements IUserService {
 	public void remove(Long id) {
 		usersRepository.deleteById(id);
 	}
-	
+
 //	public UserServiceImpl(UsersRepository userRepository) {
 //        super();
 //        this.usersRepository = userRepository;
 //    }
-	
-//	@Override
-//	public UserEntity save(UsersDTO usersDTO) {
-//		UserEntity user = new UserEntity(
-//				usersDTO.getFirstName(),
-//				usersDTO.getLastName(),
-//				usersDTO.getEmail(),
-//		        passwordEncoder.encode(usersDTO.getPassword()),
-//		        Arrays.asList(new RoleEntity("ROLE_USER")));
-//		        return usersRepository.save(user);
-//	}
+
+	@Override
+	public UserEntity save(UsersModel usersModel) {
+		UserEntity user = new UserEntity(
+				usersModel.getUsername(),
+				usersModel.getEmail(),
+				usersModel.getFullName(),
+		        passwordEncoder.encode(usersModel.getPassword()),
+		        Arrays.asList(new RoleEntity("ROLE_USER")));
+		        return usersRepository.save(user);
+	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

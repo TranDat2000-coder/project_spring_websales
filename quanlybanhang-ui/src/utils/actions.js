@@ -9,11 +9,3 @@ export const _getProductListAPI = () => {
         body: JSON.stringify()
     });
 }
-
-export const _getImage = (id) => {
-    return request({
-        url: API_BASE_ADMIN_URL + "/image/display/{id}",
-        method: "GET",
-        body: JSON.stringify(id)
-    });
-}

@@ -3,7 +3,6 @@ package com.project.quanlybanhang.common;
 import org.springframework.http.HttpStatus;
 
 public enum StatusErrorCode implements BaseErrorCode{
-
     DATA_NOT_EXITS(503, "Data does not exist", HttpStatus.OK)
     ;
 

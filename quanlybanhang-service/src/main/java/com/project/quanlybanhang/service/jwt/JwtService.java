@@ -1,5 +1,7 @@
 package com.project.quanlybanhang.service.jwt;
 
+import com.project.quanlybanhang.common.StatusErrorCode;
+import com.project.quanlybanhang.exception.BusinessException;
 import com.project.quanlybanhang.model.UserPrinciple;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
@@ -14,17 +16,34 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-    //Mục đích của class này là tạo ra token sau khi đăng nhập thành công
+    /**
+     * Mục đích của class này là tạo ra token sau khi đăng nhập thành công
+     **/
+
+    /**
+     * SECRET_KEY là bí mật, chỉ có phía service biết
+     */
     private static final String SECRET_KEY = "123456789";
-    private static final long EXPIRE_TIME = 86400000000L;
+
+    /**
+     * Thời gian có hiệu lực của chuỗi jwt
+     **/
+    private static final long EXPIRE_TIME = 104800L;
     private static final Logger logger = LoggerFactory.getLogger(JwtService.class.getName());
 
+    /**
+     * Tạo ra jwt từ thông tin user
+     */
     public String generateTokenLogin(Authentication authentication) {
         UserPrinciple userPrincipal = (UserPrinciple) authentication.getPrincipal();
+
+        /**
+         * Tạo chuỗi json web token từ username của user
+         */
         return Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))
                 .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + EXPIRE_TIME * 1000))
+                .setExpiration(new Date((new Date()).getTime() + EXPIRE_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
                 .compact();
     }
@@ -48,10 +67,10 @@ public class JwtService {
 
     public String getUserNameFromJwtToken(String token) {
 
-        String userName = Jwts.parser()
+        String username = Jwts.parser()
                 .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)
                 .getBody().getSubject();
-        return userName;
+        return username;
     }
 }

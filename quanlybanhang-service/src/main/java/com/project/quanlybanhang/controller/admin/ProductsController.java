@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.project.quanlybanhang.model.response.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -45,18 +46,18 @@ public class ProductsController {
 		return new ResponseData().success(results);
 	}
 	
-	@GetMapping(value = "/san-pham")
-	public String product(Model model, @RequestParam(value = "id", required = false)Long id) {
-		ProductModel productModel = new ProductModel();
-		if(id != null) {
-			model.addAttribute("addProduct", productService.findById(id));
-		}
-		model.addAttribute("products", productModel);
-		model.addAttribute("listCategory", cateProductService.findAll());
-		return "admin/product/insert_product";
-	}
+//	@GetMapping(value = "/san-pham")
+//	public String product(Model model, @RequestParam(value = "id", required = false)Long id) {
+//		ProductModel productModel = new ProductModel();
+//		if(id != null) {
+//			model.addAttribute("addProduct", productService.findById(id));
+//		}
+//		model.addAttribute("products", productModel);
+//		model.addAttribute("listCategory", cateProductService.findAll());
+//		return "admin/product/insert_product";
+//	}
 	
-	@GetMapping("/image/display/{id}")
+	@GetMapping(value = "/image/display/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
 	public void showImage(@PathVariable("id") Long id, HttpServletResponse response, 
 							Optional<ProductsEntity> productEntity) throws ServletException, IOException{
 		productEntity = productService.getImageById(id);

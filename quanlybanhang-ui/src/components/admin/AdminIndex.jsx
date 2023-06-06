@@ -3,11 +3,12 @@ import '../../static/admin/css/style.css';
 import '../../static/admin/vendors/simple-line-icons/css/simple-line-icons.css';
 import '../../static/admin/font-awesome/css/font-awesome.min.css';
 import '../../static/admin/vendors/css/vendor.bundle.base.css';
-// import '../../static/admin/vendors/js/vendor.bundle.base';
+import { useEffect, useState } from "react";
 
 import Sidebar from "./common/Sidebar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProductsList from "./products/ProductList";
+import { getProductListAPI } from "../../utils/actions";
 
 function Admin_index() {
 

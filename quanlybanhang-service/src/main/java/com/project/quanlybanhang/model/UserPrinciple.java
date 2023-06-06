@@ -17,13 +17,13 @@ public class UserPrinciple implements UserDetails {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private String email;
+    private String username;
     private String password;
     private Collection<? extends GrantedAuthority> roles;
 
-    public UserPrinciple(Long id, String email, String password, Collection<? extends GrantedAuthority> roles){
+    public UserPrinciple(Long id, String username, String password, Collection<? extends GrantedAuthority> roles){
         this.id = id;
-        this.email = email;
+        this.username = username;
         this.password = password;
         this.roles = roles;
     }
@@ -35,7 +35,7 @@ public class UserPrinciple implements UserDetails {
 
         return new UserPrinciple(
                 userEntity.getId(),
-                userEntity.getEmail(),
+                userEntity.getUsername(),
                 userEntity.getPassword(),
                 authorities
         );
@@ -53,7 +53,7 @@ public class UserPrinciple implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override

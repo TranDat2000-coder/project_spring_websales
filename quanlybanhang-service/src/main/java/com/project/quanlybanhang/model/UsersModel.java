@@ -5,21 +5,22 @@ import lombok.Data;
 @Data
 public class UsersModel extends BaseModel {
 
-	private String firstName;
-	
-	private String lastName;
+	private String username;
 	
 	private String email;
-	
+
 	private String password;
-	
+
+	private String fullName;
+
 	 public UsersModel() {
 	 }
-	 public UsersModel(String firstName, String lastName, String email, String password) {
-        super();
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
+
+	public UsersModel(String username, String email, String fullName, String password) {
+		 super();
+		this.username = username;
+		this.email = email;
+		this.fullName = fullName;
+		this.password = password;
+	}
 }

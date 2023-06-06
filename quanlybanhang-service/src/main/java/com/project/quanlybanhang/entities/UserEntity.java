@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+@Table(name = "users")
 public class UserEntity extends BaseEntity {
 
 	@Column(name = "username", unique = true, nullable = false)
@@ -41,6 +41,6 @@ public class UserEntity extends BaseEntity {
 		joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
 		inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
 	)
-	private Set<RoleEntity> roles;
+	private Collection<RoleEntity> roles;
 
 }

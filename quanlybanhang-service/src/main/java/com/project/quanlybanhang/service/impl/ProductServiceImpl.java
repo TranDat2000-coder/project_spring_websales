@@ -43,7 +43,7 @@ public class ProductServiceImpl implements IProductService {
 
 		List<ProductModel> productModel = new ArrayList<ProductModel>();
 
-		if(!CollectionUtils.isEmpty(productsEntity)){
+		if(CollectionUtils.isEmpty(productsEntity)){
 			throw new BusinessException(StatusErrorCode.DATA_NOT_EXITS);
 		}else{
 			for (ProductsEntity entity : productsEntity) {
