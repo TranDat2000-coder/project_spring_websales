@@ -3,6 +3,9 @@ package com.project.quanlybanhang.common;
 import org.springframework.http.HttpStatus;
 
 public enum StatusErrorCode implements BaseErrorCode{
+
+    ROLE_EXITS(501, "Role already exists", null),
+    USERNAME_EXITS(502, "Username already exists", null),
     DATA_NOT_EXITS(503, "Data does not exist", HttpStatus.OK)
     ;
 

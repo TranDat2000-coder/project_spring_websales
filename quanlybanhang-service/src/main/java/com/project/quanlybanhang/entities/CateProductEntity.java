@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "category_product")
+@Table(name = "CATEGORY_PRODUCT")
 @Data
 public class CateProductEntity extends BaseEntity {
 
