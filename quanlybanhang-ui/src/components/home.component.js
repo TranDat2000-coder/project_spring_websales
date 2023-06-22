@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import AuthService from "./../services/auth.service";
 
 import UserService from "../services/user.service";
 
@@ -12,12 +13,13 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
-    UserService.getPublicContent().then(
-      response => {
-        this.setState({
-          content: response.data
-        });
-      },
+    const user = AuthService.getCurrentUser();
+    console.log("user: ", user);
+    UserService.getPublicContent().then(response => {
+      this.setState({
+        content: response.data
+      });
+    },
       error => {
         this.setState({
           content:
