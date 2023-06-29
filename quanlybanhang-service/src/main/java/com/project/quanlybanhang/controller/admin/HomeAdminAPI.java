@@ -14,6 +14,6 @@ public class HomeAdminAPI {
 
 	@GetMapping("/home")
 	public ResponseData index() {
-		return new ResponseData().success("Vào đây kooong");
+		return new ResponseData().success("Chào mừng đến với trang quản trị dành cho quản trị viên");
 	}
 }

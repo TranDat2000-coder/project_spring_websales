@@ -28,6 +28,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     IUserService userService;
 
+    @Autowired
+    AuthEntryPointJwt authEntryPointJwt;
+
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter(){
         return new JwtAuthenticationFilter();
@@ -61,19 +64,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .csrf().ignoringAntMatchers("/**");
+        http
+                .csrf().ignoringAntMatchers("/**");
         http
                 .httpBasic().authenticationEntryPoint(restServicesEntryPoint());
         http
                 .authorizeRequests()
-                .antMatchers(
-                        "/login",
-                        "/registration**"
-                )
-                .permitAll()
-                .anyRequest()
-                .authenticated()
+                .antMatchers("/login", "/registration").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .csrf()
                 .disable();

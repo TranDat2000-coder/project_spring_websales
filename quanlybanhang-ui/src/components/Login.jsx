@@ -16,7 +16,7 @@ const required = (value) => {
   }
 };
 
-const Login = () => {
+function Login() {
   let navigate = useNavigate();
 
   const form = useRef();
@@ -44,11 +44,11 @@ const Login = () => {
     setLoading(true);
 
     form.current.validateAll();
-
+    debugger
     if (checkBtn.current.context._errors.length === 0) {
       AuthService.login(username, password).then(
         () => {
-          navigate("/profile");
+          navigate("/home");
           window.location.reload();
         },
         (error) => {
@@ -63,6 +63,27 @@ const Login = () => {
           setMessage(resMessage);
         }
       );
+      // const formData = {
+      //   username: username,
+      //   password: password
+      // }
+      // AuthService.login(formData).then(response => {
+      //   debugger;
+      //   navigate('/home');
+      //   window.location.reload();
+      // },
+      //   (error) => {
+      //     const resMessage =
+      //       (error.response &&
+      //         error.response.data &&
+      //         error.response.data.message) ||
+      //       error.message ||
+      //       error.toString();
+
+      //     setLoading(false);
+      //     setMessage(resMessage);
+      //   }
+      // );
     } else {
       setLoading(false);
     }

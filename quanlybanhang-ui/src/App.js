@@ -7,7 +7,7 @@ import AuthService from "./services/auth.service";
 
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Home from "./components/Home";
+import Admin_index from "./components/admin/AdminIndex";
 import Profile from "./components/Profile";
 import BoardUser from "./components/BoardUser";
 import BoardModerator from "./components/BoardModerator";
@@ -47,38 +47,28 @@ const App = () => {
 
   return (
     <div>
-      <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <Link to={"/"} className="navbar-brand">
-          bezKoder
-        </Link>
+      {/* <nav className="navbar navbar-expand navbar-dark bg-dark">
+        <Link to={"/"} className="navbar-brand">bezKoder</Link>
         <div className="navbar-nav mr-auto">
           <li className="nav-item">
-            <Link to={"/home"} className="nav-link">
-              Home
-            </Link>
+            <Link to={"/home"} className="nav-link">Home</Link>
           </li>
 
           {showModeratorBoard && (
             <li className="nav-item">
-              <Link to={"/mod"} className="nav-link">
-                Moderator Board
-              </Link>
+              <Link to={"/mod"} className="nav-link">Moderator Board</Link>
             </li>
           )}
 
           {showAdminBoard && (
             <li className="nav-item">
-              <Link to={"/admin"} className="nav-link">
-                Admin Board
-              </Link>
+              <Link to={"/admin"} className="nav-link">Admin Board</Link>
             </li>
           )}
 
           {currentUser && (
             <li className="nav-item">
-              <Link to={"/user"} className="nav-link">
-                User
-              </Link>
+              <Link to={"/user"} className="nav-link">User</Link>
             </li>
           )}
         </div>
@@ -111,20 +101,20 @@ const App = () => {
             </li>
           </div>
         )}
-      </nav>
+      </nav> */}
 
-      <div className="container mt-3">
-        <Routes>
-          <Route path="/" element={<Home/>} />
-          <Route path="/home" element={<Home/>} />
-          <Route path="/login" element={<Login/>} />
-          <Route path="/register" element={<Register/>} />
-          <Route path="/profile" element={<Profile/>} />
-          <Route path="/user" element={<BoardUser/>} />
-          <Route path="/mod" element={<BoardModerator/>} />
-          <Route path="/admin" element={<BoardAdmin/>} />
-        </Routes>
-      </div>
+      {/* <div className="container mt-3"> */}
+      <Routes>
+        <Route path="/" element={<Admin_index />} />
+        <Route path="/home" element={<Admin_index />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/user" element={<BoardUser />} />
+        <Route path="/mod" element={<BoardModerator />} />
+        <Route path="/admin" element={<BoardAdmin />} />
+      </Routes>
+      {/* </div> */}
 
     </div>
   );
