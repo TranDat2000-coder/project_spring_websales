@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import UserService from "../services/user.service";
 
 const Home = () => {
@@ -7,6 +6,7 @@ const Home = () => {
   const [content, setContent] = useState("");
 
   useEffect(() => {
+    debugger;
     UserService.getPublicContent().then(
       (response) => {
         console.log("response", response);

@@ -1,6 +1,6 @@
 import EventBus from "../common/EventBus";
+import { useNavigate } from "react-router-dom";
 import AuthService from "./auth.service";
-
 
 export default function authHeader() {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -14,10 +14,10 @@ export default function authHeader() {
 }
 
 export async function request(options) {
-
   debugger;
   const user = JSON.parse(localStorage.getItem('user'));
-  if (user == null) {
+  let navigate = useNavigate();
+  if (user !== null) {
     let accessToken = user.token;
 
     const authorizationStr = 'Bearer '.concat(accessToken);
@@ -27,7 +27,6 @@ export async function request(options) {
     try {
       const response = await fetch(options.url, options);
       if (!response.ok && (response.status === 401 || response.status === 500)) {
-        setTimeout(function () { EventBus.dispatch('logut') }, 1500);
         throw new Error("Phiên đăng nhập hết hạn.");
       } else {
         const json = await response.json();
@@ -40,6 +39,6 @@ export async function request(options) {
       throw new Error("Có lỗi xảy ra trong quá trình lấy dữ liệu từ máy chủ. Vui lòng thử đăng nhập lại!");
     }
   } else {
-    setTimeout(function () { EventBus.dispatch('logut') }, 1500);
+    navigate("/login");
   }
 };

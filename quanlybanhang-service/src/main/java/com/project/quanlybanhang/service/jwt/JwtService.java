@@ -19,7 +19,6 @@ public class JwtService {
     /**
      * Mục đích của class này là tạo ra token sau khi đăng nhập thành công
      **/
-
     /**
      * SECRET_KEY là bí mật, chỉ có phía service biết
      */

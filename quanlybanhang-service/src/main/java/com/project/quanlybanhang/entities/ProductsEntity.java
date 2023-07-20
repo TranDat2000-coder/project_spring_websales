@@ -7,8 +7,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.project.quanlybanhang.entities.BaseEntity;
-import com.project.quanlybanhang.entities.CateProductEntity;
 import lombok.Data;
 
 @Entity
