@@ -1,7 +1,7 @@
 package com.project.quanlybanhang.controller.auth;
 
-import com.project.quanlybanhang.entities.UserEntity;
-import com.project.quanlybanhang.model.response.JwtResponse;
+import com.project.quanlybanhang.entity.User;
+import com.project.quanlybanhang.response.common.JwtResponse;
 import com.project.quanlybanhang.service.IUserService;
 import com.project.quanlybanhang.service.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class AuthController {
     private IUserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserEntity user){
+    public ResponseEntity<?> login(@RequestBody User user){
 
         //Xác thực từ username và password.
         Authentication authentication =
@@ -41,7 +41,7 @@ public class AuthController {
         String jwt = jwtService.generateTokenLogin(authentication);
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        UserEntity currentUser = userService.findByUsername(user.getUsername()).get();
+        User currentUser = userService.findByUsername(user.getUsername()).get();
 
         return ResponseEntity.ok(new JwtResponse(jwt,
                 currentUser.getId(),

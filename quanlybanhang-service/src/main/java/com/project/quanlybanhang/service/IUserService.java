@@ -1,15 +1,15 @@
 package com.project.quanlybanhang.service;
 
-import com.project.quanlybanhang.model.UsersModel;
+import com.project.quanlybanhang.response.UserResponse;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import com.project.quanlybanhang.entities.UserEntity;
+import com.project.quanlybanhang.entity.User;
 
 import java.util.Optional;
 
-public interface IUserService extends IGeneralService<UserEntity>, UserDetailsService {
+public interface IUserService extends IGeneralService<User>, UserDetailsService {
 
-	Optional<UserEntity> findByUsername(String username);
+	Optional<User> findByUsername(String username);
 
-	UserEntity save(UsersModel usersModel);
+	User save(UserResponse usersModel);
 }

@@ -1,37 +1,36 @@
 package com.project.quanlybanhang.convert;
 
+import com.project.quanlybanhang.request.products.GetProductRequest;
+import com.project.quanlybanhang.request.products.UpdateProductRequest;
 import org.springframework.stereotype.Component;
 
-import com.project.quanlybanhang.entities.ProductsEntity;
-import com.project.quanlybanhang.model.ProductModel;
+import com.project.quanlybanhang.entity.Products;
+import com.project.quanlybanhang.response.ProductResponse;
 
 @Component
 public class ProductConvert {
 
-	public ProductModel toDTO(ProductsEntity entity){
-		
-		ProductModel dto = new ProductModel();
-		if(entity.getId() != null) {
-			dto.setId(entity.getId());
-		}
-		dto.setNamePhone(entity.getNamePhone());
-		dto.setPrice(entity.getPrice());
-		dto.setPriceSale(entity.getPriceSale());
-		dto.setDescription(entity.getDescription());
-		dto.setShortDiscription(entity.getShortDiscription());
-		dto.setSystem(entity.getSystem());
-		dto.setCpu(entity.getCpu());
-		dto.setRam(entity.getRam());
-		dto.setMemoryIn(entity.getMemoryIn());
-		dto.setCapacityPin(entity.getCapacityPin());
-		dto.setCateId(entity.getCategoryId().getId());
-		return dto;
+	public ProductResponse convertToModel(Products products){
+		ProductResponse response = ProductResponse.builder()
+				.namePhone(products.getNamePhone())
+				.shortDiscription(products.getShortDiscription())
+				.description(products.getDescription())
+				.price(products.getPrice())
+				.priceSale(products.getPriceSale())
+				.system(products.getSystem())
+				.cpu(products.getCpu())
+				.ram(products.getRam())
+				.memoryIn(products.getMemoryIn())
+				.capacityPin(products.getCapacityPin())
+				.cateId(products.getCategoryId().getId())
+				.build();
+		return response;
 		
 	}
 	
-	public ProductsEntity toEntity(ProductModel dto){
+	public Products convertToEntity(UpdateProductRequest dto){
 		
-		ProductsEntity entity = new ProductsEntity();
+		Products entity = new Products();
 		
 		entity.setNamePhone(dto.getNamePhone());
 		entity.setPrice(dto.getPrice());
@@ -47,7 +46,7 @@ public class ProductConvert {
 		
 	}
 	
-	public ProductsEntity toEntity(ProductModel dto, ProductsEntity entity) {
+	public Products toEntity(UpdateProductRequest dto, Products entity) {
 		
 		entity.setNamePhone(dto.getNamePhone());
 		entity.setPrice(dto.getPrice());

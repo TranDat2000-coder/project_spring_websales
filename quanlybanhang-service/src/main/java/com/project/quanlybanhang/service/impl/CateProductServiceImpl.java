@@ -1,14 +1,14 @@
 package com.project.quanlybanhang.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.quanlybanhang.convert.CateProductConvert;
-import com.project.quanlybanhang.entities.CateProductEntity;
-import com.project.quanlybanhang.model.CateProductModel;
+import com.project.quanlybanhang.entity.Category;
+import com.project.quanlybanhang.response.CategoryResponse;
 import com.project.quanlybanhang.repository.CateProductRepository;
 import com.project.quanlybanhang.service.ICateProductService;
 
@@ -22,29 +22,28 @@ public class CateProductServiceImpl implements ICateProductService {
 	private CateProductConvert cateProductConvert;
 
 	@Override
-	public List<CateProductModel> findAll() {
-		
-		List<CateProductEntity> productCateEntity = cateProductRepository.findAll();
-		List<CateProductModel> productCateDTO = new ArrayList<>();
-		
-		for (CateProductEntity entity : productCateEntity) {
-			CateProductModel dto = new CateProductModel();
-			dto = cateProductConvert.toDTO(entity);
-			productCateDTO.add(dto);
-		}
-		return productCateDTO;
+	public List<CategoryResponse> findAll() {
+		return cateProductRepository.findAll().stream()
+				.map(category ->{
+					CategoryResponse cateProductModel = new CategoryResponse();
+					cateProductModel.setId(category.getId());
+					cateProductModel.setName(category.getName());
+					cateProductModel.setCode(category.getCode());
+					cateProductModel.setContent(category.getContent());
+					return cateProductModel;
+				}).collect(Collectors.toList());
 	}
 
 	@Override
-	public void addCategory(CateProductModel cateProductDTO) {
-		CateProductEntity cateProductEntity = new CateProductEntity();
+	public void addCategory(CategoryResponse cateProductDTO) {
+		Category cateProductEntity = new Category();
 		cateProductEntity = cateProductConvert.toEntity(cateProductDTO);
 		cateProductEntity = cateProductRepository.save(cateProductEntity);
 	}
 
 	@Override
-	public CateProductModel findById(Long id) {
-		CateProductEntity cateProductEntity = cateProductRepository.findOneById(id);
+	public CategoryResponse findById(Long id) {
+		Category cateProductEntity = cateProductRepository.findOneById(id);
 		return cateProductConvert.toDTO(cateProductEntity);
 	}
 

@@ -2,13 +2,13 @@ package com.project.quanlybanhang.service;
 
 import java.util.List;
 
-import com.project.quanlybanhang.model.CateProductModel;
+import com.project.quanlybanhang.response.CategoryResponse;
 
 public interface ICateProductService {
 
-	List<CateProductModel> findAll();
+	List<CategoryResponse> findAll();
 	
-	public void addCategory(CateProductModel cateProductDTO);
+	public void addCategory(CategoryResponse cateProductDTO);
 	
-	CateProductModel findById(Long id);
+	CategoryResponse findById(Long id);
 }

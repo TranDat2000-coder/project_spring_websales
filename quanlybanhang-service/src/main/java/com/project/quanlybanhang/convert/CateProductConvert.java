@@ -2,15 +2,15 @@ package com.project.quanlybanhang.convert;
 
 import org.springframework.stereotype.Component;
 
-import com.project.quanlybanhang.entities.CateProductEntity;
-import com.project.quanlybanhang.model.CateProductModel;
+import com.project.quanlybanhang.entity.Category;
+import com.project.quanlybanhang.response.CategoryResponse;
 
 @Component
 public class CateProductConvert {
 
-	public CateProductModel toDTO(CateProductEntity entity) {
+	public CategoryResponse toDTO(Category entity) {
 		
-		CateProductModel dto = new CateProductModel();
+		CategoryResponse dto = new CategoryResponse();
 		if(entity.getId() != null) {
 			dto.setId(entity.getId());
 		}
@@ -22,9 +22,9 @@ public class CateProductConvert {
 		
 	}
 	
-	public CateProductEntity toEntity(CateProductModel dto) {
+	public Category toEntity(CategoryResponse dto) {
 		
-		CateProductEntity entity = new CateProductEntity();
+		Category entity = new Category();
 		entity.setName(dto.getName());
 		entity.setCode(dto.getCode());
 		entity.setContent(dto.getContent());
@@ -33,7 +33,7 @@ public class CateProductConvert {
 		
 	}
 	
-	public CateProductEntity toEntity(CateProductEntity entity, CateProductModel dto) {
+	public Category toEntity(Category entity, CategoryResponse dto) {
 		
 		entity.setName(dto.getName());
 		entity.setCode(dto.getCode());

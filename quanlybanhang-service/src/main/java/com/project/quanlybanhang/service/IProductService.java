@@ -1,27 +1,28 @@
 package com.project.quanlybanhang.service;
 
+import com.project.quanlybanhang.entity.Products;
+import com.project.quanlybanhang.request.products.GetProductRequest;
+import com.project.quanlybanhang.request.products.UpdateProductRequest;
+import com.project.quanlybanhang.response.ProductResponse;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import com.project.quanlybanhang.entities.ProductsEntity;
-import com.project.quanlybanhang.model.ProductModel;
-
 public interface IProductService {
 
-	 List<ProductModel> findAll();
+	List<ProductResponse> getProductList(GetProductRequest productRequest);
+
+	ProductResponse findById(Long id);
 	 
-	 public void save(ProductModel productModel, MultipartFile file, String pathFile) throws FileNotFoundException;
-	 
-	 ProductModel findById(Long id);
+	 public void save(UpdateProductRequest productRequest, MultipartFile file, String pathFile) throws FileNotFoundException;
 
 	void deleteById(Long[] id);
 	
-	Optional<ProductsEntity> getImageById(Long id);
+	Optional<Products> getImageById(Long id);
 	
-	List<ProductModel> findAllProductByCategoryId(Long id);
+	List<ProductResponse> findAllProductByCategoryId(Long id);
 	
-	List<ProductModel> searchProduct(String keywordName);
+	List<ProductResponse> searchProduct(String keywordName);
 }

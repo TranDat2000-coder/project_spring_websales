@@ -1,14 +1,13 @@
 package com.project.quanlybanhang.service.impl;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
-import com.project.quanlybanhang.common.StatusErrorCode;
-import com.project.quanlybanhang.entities.RoleEntity;
+import com.project.quanlybanhang.common.ErrorCode;
+import com.project.quanlybanhang.entity.Role;
 import com.project.quanlybanhang.exception.BusinessException;
-import com.project.quanlybanhang.model.UserPrinciple;
-import com.project.quanlybanhang.model.UsersModel;
+import com.project.quanlybanhang.response.UserPrinciple;
+import com.project.quanlybanhang.response.UserResponse;
 import com.project.quanlybanhang.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.project.quanlybanhang.entities.UserEntity;
+import com.project.quanlybanhang.entity.User;
 import com.project.quanlybanhang.repository.UsersRepository;
 import com.project.quanlybanhang.service.IUserService;
 
@@ -33,17 +32,17 @@ public class UserServiceImpl implements IUserService {
     private BCryptPasswordEncoder passwordEncoder;
 
 	@Override
-	public Iterable<UserEntity> findAll() {
+	public Iterable<User> findAll() {
 		return usersRepository.findAll();
 	}
 
 	@Override
-	public Optional<UserEntity> findById(Long id) {
+	public Optional<User> findById(Long id) {
 		return usersRepository.findById(id);
 	}
 
 	@Override
-	public UserEntity save(UserEntity userEntity) {
+	public User save(User userEntity) {
 		userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
 		return usersRepository.save(userEntity);
 	}
@@ -54,19 +53,19 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public UserEntity save(UsersModel request) {
+	public User save(UserResponse request) {
 
-		UserEntity username = this.findByUsername(request.getUsername()).get();
+		User username = this.findByUsername(request.getUsername()).get();
 		if(!username.getUsername().isEmpty()){
-			throw new BusinessException(StatusErrorCode.USERNAME_EXITS);
+			throw new BusinessException(ErrorCode.USERNAME_EXITS);
 		}
 
-		RoleEntity roles = roleRepository.findByName("ROLE_ADMIN").get();
+		Role roles = roleRepository.findByName("ROLE_ADMIN").get();
 		if(!roles.getName().isEmpty()){
-			throw new BusinessException(StatusErrorCode.ROLE_EXITS);
+			throw new BusinessException(ErrorCode.ROLE_EXITS);
 		}
 
-		UserEntity user = UserEntity.builder()
+		User user = User.builder()
 				.username(request.getUsername())
 				.email(request.getEmail())
 				.fullName(request.getFullName())
@@ -79,7 +78,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		Optional<UserEntity> userEntity = usersRepository.findByUsername(username);
+		Optional<User> userEntity = usersRepository.findByUsername(username);
 
 		if(!userEntity.isPresent()) {
 			throw new UsernameNotFoundException("Sai username or password.");
@@ -88,7 +87,7 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public Optional<UserEntity> findByUsername(String username) {
+	public Optional<User> findByUsername(String username) {
 		return usersRepository.findByUsername(username);
 	}
 

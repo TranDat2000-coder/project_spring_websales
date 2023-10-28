@@ -1,15 +1,14 @@
 package com.project.quanlybanhang.service.jwt;
 
-import com.project.quanlybanhang.common.StatusErrorCode;
-import com.project.quanlybanhang.exception.BusinessException;
-import com.project.quanlybanhang.model.UserPrinciple;
+import com.project.quanlybanhang.response.UserPrinciple;
 import io.jsonwebtoken.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.jsonwebtoken.impl.crypto.MacProvider;
+import org.slf4j.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.security.Key;
 import java.util.Date;
 
 @Component
@@ -18,16 +17,16 @@ public class JwtService {
 
     /**
      * Mục đích của class này là tạo ra token sau khi đăng nhập thành công
-     **/
+     */
+
     /**
      * SECRET_KEY là bí mật, chỉ có phía service biết
      */
-    private static final String SECRET_KEY = "123456789";
-
+    static Key SECRET_KEY = MacProvider.generateKey();
     /**
      * Thời gian có hiệu lực của chuỗi jwt
      **/
-    private static final long EXPIRE_TIME = 104800L;
+    private static final long EXPIRE_TIME = 1048000L;
     private static final Logger logger = LoggerFactory.getLogger(JwtService.class.getName());
 
     /**
@@ -49,27 +48,25 @@ public class JwtService {
 
     public boolean validateJwtToken(String authToken) {
         try {
-            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(authToken);
+            Jwts.parser().setSigningKey(SECRET_KEY.getEncoded()).parseClaimsJws(authToken);
             return true;
         } catch (MalformedJwtException e) {
-            logger.error("Invalid JWT token -> Message: {}", e);
+            logger.error("Invalid JWT token -> Message: ", e);
         } catch (ExpiredJwtException e) {
-            logger.error("Expired JWT token -> Message: {}", e);
+            logger.error("Expired JWT token -> Message: ", e);
         } catch (UnsupportedJwtException e) {
-            logger.error("Unsupported JWT token -> Message: {}", e);
+            logger.error("Unsupported JWT token -> Message: ", e);
         } catch (IllegalArgumentException e) {
-            logger.error("JWT claims string is empty -> Message: {}", e);
+            logger.error("JWT claims string is empty -> Message: ", e);
         }
 
         return false;
     }
 
     public String getUserNameFromJwtToken(String token) {
-
-        String username = Jwts.parser()
+        return Jwts.parser()
                 .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)
                 .getBody().getSubject();
-        return username;
     }
 }

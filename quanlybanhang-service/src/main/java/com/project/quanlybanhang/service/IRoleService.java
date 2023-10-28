@@ -1,8 +1,8 @@
 package com.project.quanlybanhang.service;
 
-import com.project.quanlybanhang.entities.RoleEntity;
+import com.project.quanlybanhang.entity.Role;
 
-public interface IRoleService extends IGeneralService<RoleEntity>{
+public interface IRoleService extends IGeneralService<Role>{
 
-    RoleEntity findByName(String name);
+    Role findByName(String name);
 }
