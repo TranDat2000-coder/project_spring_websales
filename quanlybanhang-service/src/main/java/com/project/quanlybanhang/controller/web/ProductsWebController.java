@@ -34,7 +34,7 @@ public class ProductsWebController {
 	@GetMapping("/image/display/{id}")
 	public void showImage(@PathVariable("id") Long id, HttpServletResponse response, 
 							Optional<Products> productEntity) throws ServletException, IOException{
-		productEntity = productService.getImageById(id);
+		productEntity = productService.findImageById(id);
 		response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
 		response.getOutputStream().write(productEntity.get().getImage());
 		response.getOutputStream().close();

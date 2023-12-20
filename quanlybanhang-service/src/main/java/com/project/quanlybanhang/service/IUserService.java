@@ -12,4 +12,5 @@ public interface IUserService extends IGeneralService<User>, UserDetailsService 
 	Optional<User> findByUsername(String username);
 
 	User save(UserResponse usersModel);
+
 }

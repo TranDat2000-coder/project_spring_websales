@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import com.project.quanlybanhang.repository.CateProductRepository;
+import com.project.quanlybanhang.service.ICateProductService;
+import com.project.quanlybanhang.service.IProductService;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;

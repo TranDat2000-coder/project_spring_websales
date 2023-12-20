@@ -1,14 +1,10 @@
 package com.project.quanlybanhang.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@SuperBuilder
 public class ProductResponse extends BaseResponse {
 
 	private String namePhone;
@@ -34,4 +30,5 @@ public class ProductResponse extends BaseResponse {
 	private Integer capacityPin; //Dung lượng pin
 
 	private Long cateId;
+
 }

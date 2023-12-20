@@ -1,10 +1,16 @@
 package com.project.quanlybanhang.response;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
 import java.util.Date;
 
-import lombok.Data;
-
-@Data	
+@Data
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BaseResponse {
 
 	private Long id;

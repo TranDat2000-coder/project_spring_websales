@@ -12,7 +12,8 @@ import com.project.quanlybanhang.request.products.UpdateProductRequest;
 import com.project.quanlybanhang.response.ProductResponse;
 import com.project.quanlybanhang.service.IProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -23,7 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -35,16 +35,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements IProductService {
 
+	private static final Logger log = LogManager.getLogger(ProductServiceImpl.class);
+
 	private final ProductRepository productRepository;
-	
-	@Autowired
-	private ProductConvert productConvert;
-	
-	@Autowired
-	private CateProductRepository cateProductRepository;
+	private final ProductConvert productConvert;
+	private final CateProductRepository cateProductRepository;
 
 	@Override
-	public List<ProductResponse> getProductList(GetProductRequest productRequest) {
+	public List<ProductResponse> findAll(GetProductRequest productRequest) {
 
 		try {
 			Pageable paging = PageRequest.of( Integer.parseInt(productRequest.getPageNo()) - 1, Integer.parseInt(productRequest.getPageSize()));
@@ -52,11 +50,10 @@ public class ProductServiceImpl implements IProductService {
 
 			List<Products> product =  pageResult.getContent();
 
-			List<ProductResponse> responses = product.stream()
-					.map(products -> productConvert.convertToModel(products))
+            return product.stream()
+					.map(productConvert::convertToModel)
 					.collect(Collectors.toList());
 
-			return responses;
 		}catch (DataAccessException e){
 			throw new BusinessException(ErrorCode.DATA_NOT_EXITS);
 		}
@@ -68,47 +65,36 @@ public class ProductServiceImpl implements IProductService {
 		if(products == null){
 			throw new BusinessException(ErrorCode.DATA_NOT_EXITS);
 		}
-		return ProductResponse.builder()
-				.namePhone(products.getNamePhone())
-				.shortDiscription(products.getShortDiscription())
-				.description(products.getDescription())
-				.price(products.getPrice())
-				.priceSale(products.getPriceSale())
-				.system(products.getSystem())
-				.cpu(products.getCpu())
-				.ram(products.getRam())
-				.memoryIn(products.getMemoryIn())
-				.capacityPin(products.getCapacityPin())
-				.cateId(products.getCategoryId().getId())
-				.build();
+		return productConvert.convertToModel(products);
 	}
 
 	@Override
-	public void save(UpdateProductRequest productRequest, MultipartFile file, String pathFile) throws FileNotFoundException {
+	@Transactional
+	public void save(UpdateProductRequest request, MultipartFile file, String pathFile) throws FileNotFoundException {
 		
-		Products productsEntity = new Products();
-		Category cateProductEntity = cateProductRepository.findOneById(productRequest.getCateId());
+		Products productsEntity;
+		Category category = cateProductRepository.findOneById(request.getCateId());
 		
-		if(productRequest.getId() != null) {
-			Products oldProduct = productRepository.findOneById(productRequest.getId());
-			oldProduct.setCategoryId(cateProductEntity);
-			productsEntity = productConvert.toEntity(productRequest, oldProduct);
+		if(request.getId() != null) {
+			Products oldProduct = productRepository.findOneById(request.getId());
+			oldProduct.setCategoryId(category);
+			productsEntity = productConvert.dtoToEntity(request, oldProduct);
 		}else {
-			productsEntity = productConvert.convertToEntity(productRequest);
-			productsEntity.setCategoryId(cateProductEntity);
+			productsEntity = productConvert.convertToEntity(request);
+			productsEntity.setCategoryId(category);
 		}
 		try {
 			//Lưu tệp cục bộ
-			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(pathFile)));
+			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(pathFile));
 			stream.write(file.getBytes());
 			stream.close();
 			byte[] imageData = file.getBytes();
 			productsEntity.setImage(imageData);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.info("Exception save product: ", e);
 		}
 		
-		productsEntity = productRepository.save(productsEntity);
+		productRepository.save(productsEntity);
 	}
 
 	@Override
@@ -124,7 +110,7 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Optional<Products> getImageById(Long id) {
+	public Optional<Products> findImageById(Long id) {
 		return productRepository.findById(id);
 	}
 
@@ -145,8 +131,7 @@ public class ProductServiceImpl implements IProductService {
 		List<ProductResponse> listProduct = new ArrayList<>();
 		List<Products> listProductEntity = productRepository.findByKeyWord(keywordName);
 		for(Products product : listProductEntity) {
-			ProductResponse productModel = new ProductResponse();
-			productModel = productConvert.convertToModel(product);
+			ProductResponse productModel = productConvert.convertToModel(product);
 			listProduct.add(productModel);
 		}
 		return listProduct;

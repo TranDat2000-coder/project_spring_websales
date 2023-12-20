@@ -2,11 +2,13 @@ package com.project.quanlybanhang.response.common;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.OptBoolean;
+import lombok.Data;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 import java.util.Date;
 
+@Data
 public class ResponseData<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,45 +42,5 @@ public class ResponseData<T> implements Serializable {
         responseData.setMessage(message);
         responseData.setData(data);
         return responseData;
-    }
-
-    public int getStatus() {
-        return this.status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    public String getMessage() {
-        return this.message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Date getTimestamp() {
-        return this.timestamp;
-    }
-
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
     }
 }

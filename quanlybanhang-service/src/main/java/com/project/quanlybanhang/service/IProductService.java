@@ -12,17 +12,17 @@ import java.util.Optional;
 
 public interface IProductService {
 
-	List<ProductResponse> getProductList(GetProductRequest productRequest);
+    List<ProductResponse> findAll(GetProductRequest productRequest);
 
-	ProductResponse findById(Long id);
-	 
-	 public void save(UpdateProductRequest productRequest, MultipartFile file, String pathFile) throws FileNotFoundException;
+    ProductResponse findById(Long id);
 
-	void deleteById(Long[] id);
-	
-	Optional<Products> getImageById(Long id);
-	
-	List<ProductResponse> findAllProductByCategoryId(Long id);
-	
-	List<ProductResponse> searchProduct(String keywordName);
+    void save(UpdateProductRequest productRequest, MultipartFile file, String pathFile) throws FileNotFoundException;
+
+    void deleteById(Long[] id);
+
+    Optional<Products> findImageById(Long id);
+
+    List<ProductResponse> findAllProductByCategoryId(Long id);
+
+    List<ProductResponse> searchProduct(String keywordName);
 }

@@ -8,7 +8,7 @@ public interface ICateProductService {
 
 	List<CategoryResponse> findAll();
 	
-	public void addCategory(CategoryResponse cateProductDTO);
+	void addCategory(CategoryResponse cateProductDTO);
 	
 	CategoryResponse findById(Long id);
 }

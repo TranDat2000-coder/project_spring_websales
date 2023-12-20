@@ -4,7 +4,6 @@ import com.project.quanlybanhang.config.custom.CustomAccessDeniedHandler;
 import com.project.quanlybanhang.config.custom.RestAuthenticationEntryPoint;
 import com.project.quanlybanhang.config.filter.JwtAuthenticationFilter;
 import com.project.quanlybanhang.service.IUserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,13 +32,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private AuthEntryPointJwt authEntryPointJwt;
 
     @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter(){
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
         return new JwtAuthenticationFilter();
     }
 
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
     @Override
-    public AuthenticationManager authenticationManager() throws Exception{
+    public AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
 
@@ -53,9 +52,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new CustomAccessDeniedHandler();
     }
 
-	@Bean
+    @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-       return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder();
     }
 
     @Autowired
@@ -65,22 +64,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.cors().and().csrf().disable()
-//                        .authorizeRequests()
-//                        .antMatchers(
-//                                "/login",
-//                                "/registration",
-//                                "/swagger-ui/**"
-//                        ).permitAll()
-//                .anyRequest()
-//                .authenticated();
+
         http
                 .csrf().ignoringAntMatchers("/**");
         http
                 .httpBasic().authenticationEntryPoint(restServicesEntryPoint());
         http
                 .authorizeRequests()
-                .antMatchers("/login", "/registration").permitAll()
+                .antMatchers("/generateToken", "/registration").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .csrf()

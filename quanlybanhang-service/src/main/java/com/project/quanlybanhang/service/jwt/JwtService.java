@@ -12,7 +12,6 @@ import java.security.Key;
 import java.util.Date;
 
 @Component
-@Service
 public class JwtService {
 
     /**
@@ -20,21 +19,21 @@ public class JwtService {
      */
 
     /**
-     * SECRET_KEY là bí mật, chỉ có phía service biết
+     * SECRET_KEY là bảo mật, chỉ có phía service biết
      */
-    static Key SECRET_KEY = MacProvider.generateKey();
+    public static final String SECRET_KEY = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
     /**
      * Thời gian có hiệu lực của chuỗi jwt
      **/
-    private static final long EXPIRE_TIME = 1048000L;
+    private static final long EXPIRE_TIME = 3600000;
     private static final Logger logger = LoggerFactory.getLogger(JwtService.class.getName());
 
     /**
      * Tạo ra jwt từ thông tin user
      */
     public String generateTokenLogin(Authentication authentication) {
-        UserPrinciple userPrincipal = (UserPrinciple) authentication.getPrincipal();
 
+        UserPrinciple userPrincipal = (UserPrinciple) authentication.getPrincipal();
         /**
          * Tạo chuỗi json web token từ username của user
          */
@@ -48,7 +47,7 @@ public class JwtService {
 
     public boolean validateJwtToken(String authToken) {
         try {
-            Jwts.parser().setSigningKey(SECRET_KEY.getEncoded()).parseClaimsJws(authToken);
+            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(authToken);
             return true;
         } catch (MalformedJwtException e) {
             logger.error("Invalid JWT token -> Message: ", e);
