@@ -1,18 +1,15 @@
 package com.project.quanlybanhang.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Data
 @Builder
-@Table(name = "products")
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "products")
 public class Products extends BaseEntity {
 
 	@Column(name = "namephone")

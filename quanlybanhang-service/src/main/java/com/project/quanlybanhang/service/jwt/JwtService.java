@@ -31,7 +31,7 @@ public class JwtService {
     /**
      * Tạo ra jwt từ thông tin user
      */
-    public String generateTokenLogin(Authentication authentication) {
+    public String generateToken(Authentication authentication) {
 
         UserPrinciple userPrincipal = (UserPrinciple) authentication.getPrincipal();
         /**

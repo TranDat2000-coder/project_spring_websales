@@ -7,11 +7,15 @@ import com.project.quanlybanhang.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 
 @Service
 public class AuthService {
@@ -36,7 +40,7 @@ public class AuthService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         //Trả về JWT cho người dùng
-        String jwt = jwtService.generateTokenLogin(authentication);
+        String jwt = jwtService.generateToken(authentication);
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User currentUser = userService.findByUsername(authRequest.getUsername()).get();
@@ -47,5 +51,6 @@ public class AuthService {
                 currentUser.getFullName(),
                 userDetails.getAuthorities())
         );
+
     }
 }

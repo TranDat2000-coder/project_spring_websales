@@ -11,6 +11,7 @@ import com.project.quanlybanhang.response.UserResponse;
 import com.project.quanlybanhang.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -78,12 +79,10 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		Optional<User> userEntity = usersRepository.findByUsername(username);
+		User userDetail = usersRepository.findByUsername(username)
+				.orElseThrow(() -> new UsernameNotFoundException("User name not found" + username));
 
-		if(!userEntity.isPresent()) {
-			throw new UsernameNotFoundException("Sai username or password.");
-		}
-		return UserPrinciple.build(userEntity.get());
+		return UserPrinciple.build(userDetail);
 	}
 
 	@Override

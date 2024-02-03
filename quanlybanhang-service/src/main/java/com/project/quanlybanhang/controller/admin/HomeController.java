@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeController {
 
 	@GetMapping("/home")
-	public ResponseData index() {
+	public ResponseData<?> index() {
 		return new ResponseData().success("Chào mừng đến với trang quản trị dành cho quản trị viên");
 	}
 }

@@ -1,8 +1,9 @@
+
+import React from "react";
 import logo from "../../../static/admin/images/logo.svg";
 import imageProfile from "../../../static/admin/images/faces/face8.jpg";
 
-function Navbar() {
-
+const Navbar = () => {
     return (
         <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div className="navbar-brand-wrapper d-flex align-items-center">

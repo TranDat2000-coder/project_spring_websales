@@ -116,7 +116,7 @@ public class ProductServiceImpl implements IProductService {
 
 	@Override
 	public List<ProductResponse> findAllProductByCategoryId(Long id) {
-		List<ProductResponse> listProduct = new ArrayList<ProductResponse>();
+		List<ProductResponse> listProduct = new ArrayList<>();
 		Category category = cateProductRepository.findOneById(id);
 		List<Products> productsEntity = productRepository.findAllProductByCategoryId(category);
 		for(Products entity : productsEntity) {

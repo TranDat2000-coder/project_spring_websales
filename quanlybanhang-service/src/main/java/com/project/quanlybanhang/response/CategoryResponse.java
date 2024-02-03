@@ -2,6 +2,8 @@ package com.project.quanlybanhang.response;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class CategoryResponse extends BaseResponse {
 	
@@ -11,5 +13,5 @@ public class CategoryResponse extends BaseResponse {
 	
 	private String content;
 	
-	
+	private List<ProductResponse> lstProduct;
 }

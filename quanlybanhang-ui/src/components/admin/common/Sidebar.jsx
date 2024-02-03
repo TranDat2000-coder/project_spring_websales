@@ -1,8 +1,10 @@
 
+import React from "react";
+
 import { Menu } from "antd";
 import imageProfile from "../../../static/admin/images/faces/face8.jpg";
 
-function Sidebar() {
+const Sidebar = () => {
 
     function getItem(label, key, children, type) {
         return {
@@ -15,7 +17,7 @@ function Sidebar() {
 
     const items = [
         getItem("Quản lý sản phẩm", "sub1", [
-            getItem(<a className="nav-link" href="/product-list">Danh sách sản phẩm</a>, "a1"),
+            getItem(<a className="nav-link" href="/admin/product-list">Danh sách sản phẩm</a>, "a1"),
             getItem(<a className="nav-link" href="">Thêm sách sản phẩm</a>, "a2")
         ]),
         getItem("Quản lý thể loại", "sub2", [
