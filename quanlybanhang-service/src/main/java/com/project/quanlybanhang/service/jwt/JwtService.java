@@ -2,13 +2,11 @@ package com.project.quanlybanhang.service.jwt;
 
 import com.project.quanlybanhang.response.UserPrinciple;
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.impl.crypto.MacProvider;
-import org.slf4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import java.security.Key;
 import java.util.Date;
 
 @Component
@@ -49,6 +47,8 @@ public class JwtService {
         try {
             Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(authToken);
             return true;
+        } catch (SignatureException e){
+            logger.error("Invalid JWT signature -> Message: ", e);
         } catch (MalformedJwtException e) {
             logger.error("Invalid JWT token -> Message: ", e);
         } catch (ExpiredJwtException e) {

@@ -40,15 +40,16 @@ public class AuthService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         //Trả về JWT cho người dùng
-        String jwt = jwtService.generateToken(authentication);
+        String resultJwt = jwtService.generateToken(authentication);
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        User currentUser = userService.findByUsername(authRequest.getUsername()).get();
+        User currUser = userService.findByUsername(authRequest.getUsername()).get();
 
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                currentUser.getId(),
+        return ResponseEntity.ok(new JwtResponse(
+                currUser.getId(),
+                resultJwt,
                 userDetails.getUsername(),
-                currentUser.getFullName(),
+                currUser.getFullName(),
                 userDetails.getAuthorities())
         );
 

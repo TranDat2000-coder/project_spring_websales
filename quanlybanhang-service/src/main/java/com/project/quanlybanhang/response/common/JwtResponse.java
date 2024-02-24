@@ -10,17 +10,17 @@ public class JwtResponse {
 
     private Long id;
     private String token;
-
     private String type = "Bearer";
     private String username;
-    private String name;
+    private String fullName;
     private Collection<? extends GrantedAuthority> roles;
 
-    public JwtResponse(String accessToken, Long id, String username, String name, Collection<? extends GrantedAuthority> roles) {
-        this.token = accessToken;
+    public JwtResponse(Long id, String token, String username, String fullName,
+                       Collection<? extends GrantedAuthority> roles) {
         this.id = id;
+        this.token = token;
         this.username = username;
-        this.name = name;
+        this.fullName = fullName;
         this.roles = roles;
     }
 }

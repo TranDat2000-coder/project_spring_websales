@@ -39,7 +39,7 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
+        debugger;
         AuthService.login(username, password).then((res) => {
             debugger;
             navigate("/home");
@@ -62,50 +62,6 @@ const Login = () => {
                 <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                     <div style={{ textAlign: "center" }}>
                         <h1>ĐĂNG NHẬP</h1>
-                        {/* <Form
-                            onSubmit={handleLogin}
-                            // name="basic"
-                            // initialValues={{ remember: true, }}
-                            // onFinish={onFinish}
-                            // onFinishFailed={onFinishFailed}
-                            // autoComplete="off"
-                            className="login-page"
-                        >
-                            <Form.Item
-                                label="Username"
-                                name="username"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please input your username!',
-                                    },
-                                ]}
-
-                            >
-                                <Input value={username} onChange={onChangeUserName} />
-                            </Form.Item>
-
-                            <Form.Item label="Password" name="password"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please input your password!',
-                                    },
-                                ]}
-
-                            >
-                                <Input.Password value={password} onChange={onChangePassword} />
-                            </Form.Item>
-
-                            <Form.Item name="remember" valuePropName="checked">
-                                <Checkbox>Remember me</Checkbox>
-                            </Form.Item>
-
-
-                            <button >Login</button>
-
-                        </Form> */}
-
                         <Form onSubmit={handleLogin} ref={form}>
                             <div className="form-group">
                                 <label htmlFor="username">Username</label>
