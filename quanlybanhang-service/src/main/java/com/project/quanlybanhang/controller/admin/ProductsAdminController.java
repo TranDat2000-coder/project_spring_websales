@@ -5,7 +5,7 @@ import com.project.quanlybanhang.common.ErrorCode;
 import com.project.quanlybanhang.entity.Products;
 import com.project.quanlybanhang.exception.BusinessException;
 import com.project.quanlybanhang.repository.ProductRepository;
-import com.project.quanlybanhang.request.products.GetProductRequest;
+import com.project.quanlybanhang.request.products.ProductRequest;
 import com.project.quanlybanhang.request.products.UpdateProductRequest;
 import com.project.quanlybanhang.response.ProductResponse;
 import com.project.quanlybanhang.response.common.ResponseData;
@@ -14,12 +14,15 @@ import com.project.quanlybanhang.service.IProductService;
 import com.project.quanlybanhang.utils.CommonConstant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import javax.tools.FileObject;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,9 +32,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 @RequestMapping("/admin")
-@CrossOrigin(origins = "http://localhost:3000")
 public class ProductsAdminController {
 
     private final IProductService productService;
@@ -43,17 +46,19 @@ public class ProductsAdminController {
     private ProductRepository productRepository;
 
     @PostMapping(value = "/list-products")
-    public ResponseData<List<ProductResponse>> listProduct(@RequestBody @Valid GetProductRequest productRequest) {
+    public ResponseData<List<ProductResponse>> listProduct(HttpServletResponse response,
+                                                           @RequestBody @Valid ProductRequest productRequest) {
+
         List<ProductResponse> results = productService.findAll(productRequest);
         return new ResponseData().success(results);
     }
 
     @GetMapping(value = "/image/display/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     public void showImage(@PathVariable("id") Long id,
-                          HttpServletResponse response,
-                          Optional<Products> productEntity) throws IOException {
+                                    HttpServletResponse response,
+                                    Optional<Products> productEntity) throws IOException {
         productEntity = productService.findImageById(id);
-        response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+        response.setContentType("image/jpg");
         response.getOutputStream().write(productEntity.get().getImage());
         response.getOutputStream().close();
     }

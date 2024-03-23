@@ -19496,3 +19496,45 @@ dl li {
 .ant-menu .ant-menu-submenu .ant-menu-sub .ant-menu-item {
   padding-left: 0 !important;
 }
+
+.form-login {
+  margin: auto;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  padding: 50px 0px 50px 0px;
+
+}
+
+.form-login .bg-login {
+  height: 100%;
+  background: #eff0f5;
+  display: flex;
+}
+
+.form-login .bg-login .wrapper-form {
+  margin: auto;
+  width: 50%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.form-login .bg-login .wrapper-form .header {
+  width: 100%;
+  padding: 0 100px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-login .bg-login .wrapper-form .content-form {
+  width: 100%;
+  padding: 0 200px;
+  text-align: center;
+}
+
+.form-login .bg-login .wrapper-form .content-form .login-form-button {
+  margin-right: 20px;
+}

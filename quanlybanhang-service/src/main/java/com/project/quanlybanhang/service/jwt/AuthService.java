@@ -2,6 +2,7 @@ package com.project.quanlybanhang.service.jwt;
 
 import com.project.quanlybanhang.entity.User;
 import com.project.quanlybanhang.request.AuthRequest;
+import com.project.quanlybanhang.response.UserPrincipal;
 import com.project.quanlybanhang.response.common.JwtResponse;
 import com.project.quanlybanhang.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,6 @@ public class AuthService {
     private JwtService jwtService;
 
     @Autowired
-    private IUserService userService;
-
-    @Autowired
     private AuthenticationManager authenticationManager;
 
     public ResponseEntity<JwtResponse> authenticateGetToken(AuthRequest authRequest) {
@@ -38,19 +36,17 @@ public class AuthService {
         //Nếu không xảy ra exception tức là thông tin hợp lệ
         //Set thông tin authentication vào Security context
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        UserPrincipal principal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         //Trả về JWT cho người dùng
         String resultJwt = jwtService.generateToken(authentication);
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        User currUser = userService.findByUsername(authRequest.getUsername()).get();
-
         return ResponseEntity.ok(new JwtResponse(
-                currUser.getId(),
+                principal.getId(),
                 resultJwt,
-                userDetails.getUsername(),
-                currUser.getFullName(),
-                userDetails.getAuthorities())
+                principal.getUsername(),
+                principal.getFullName(),
+                authentication.getAuthorities())
         );
 
     }

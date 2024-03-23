@@ -6,17 +6,17 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@SpringBootApplication(exclude = {SecurityAutoConfiguration.class })
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class QuanlybanhangApplication implements WebMvcConfigurer {
 
-	public static void main(String[] args) {
-		SpringApplication.run(QuanlybanhangApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(QuanlybanhangApplication.class, args);
+    }
 
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/images/**").addResourceLocations("classpath:/images/");
-	}
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/images/**").addResourceLocations("classpath:/images/");
+    }
 
 
 }

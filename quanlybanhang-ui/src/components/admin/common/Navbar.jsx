@@ -2,12 +2,18 @@
 import React from "react";
 import logo from "../../../static/admin/images/logo.svg";
 import imageProfile from "../../../static/admin/images/faces/face8.jpg";
+import AuthService from "../../service/auth-service";
 
 const Navbar = () => {
+
+    const logOut = () => {
+        AuthService.logout()
+    }
+
     return (
         <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div className="navbar-brand-wrapper d-flex align-items-center">
-                <a className="navbar-brand brand-logo" href="index.html">
+                <a className="navbar-brand brand-logo" href="/admin/home">
                     <img src={logo} alt="logo" className="logo-dark" />
                 </a>
                 <a className="navbar-brand brand-logo-mini" href=""><img src="" alt="logo" /></a>
@@ -66,7 +72,7 @@ const Navbar = () => {
                             <div className="d-inline-flex mr-3">
                                 <i className="flag-icon flag-icon-us"></i>
                             </div>
-                            <span className="profile-text font-weight-normal">English</span>
+                            <span className="profile-text font-weight-normal ">English</span>
                         </a>
                         <div className="dropdown-menu dropdown-menu-left navbar-dropdown py-2" aria-labelledby="LanguageDropdown">
                             <a className="dropdown-item">
@@ -80,7 +86,8 @@ const Navbar = () => {
                         </div>
                     </li>
                     <li className="nav-item dropdown d-none d-xl-inline-flex user-dropdown">
-                        <a className="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                        <a href="/admin/login" className="nav-link" onClick={logOut}>LogOut</a>
+                        {/* <a className="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                             <img className="img-xs rounded-circle ml-2" src={imageProfile} alt="Profile image" /> <span className="font-weight-normal"> Henry Klein </span></a>
                         <div className="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                             <div className="dropdown-header text-center">
@@ -93,7 +100,7 @@ const Navbar = () => {
                             <a className="dropdown-item"><i className="dropdown-item-icon icon-energy text-primary"></i> Activity</a>
                             <a className="dropdown-item"><i className="dropdown-item-icon icon-question text-primary"></i> FAQ</a>
                             <a className="dropdown-item"><i className="dropdown-item-icon icon-power text-primary"></i>Sign Out</a>
-                        </div>
+                        </div> */}
                     </li>
                 </ul>
                 <button className="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
@@ -101,7 +108,7 @@ const Navbar = () => {
                 </button>
             </div>
         </nav>
-    )
+    );
 }
 
 export default Navbar;

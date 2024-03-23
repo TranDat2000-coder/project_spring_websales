@@ -1,18 +1,19 @@
 package com.project.quanlybanhang.service;
 
 import com.project.quanlybanhang.entity.Products;
-import com.project.quanlybanhang.request.products.GetProductRequest;
+import com.project.quanlybanhang.request.products.ProductRequest;
 import com.project.quanlybanhang.request.products.UpdateProductRequest;
 import com.project.quanlybanhang.response.ProductResponse;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
 public interface IProductService {
 
-    List<ProductResponse> findAll(GetProductRequest productRequest);
+    List<ProductResponse> findAll(ProductRequest productRequest);
 
     ProductResponse findById(Long id);
 

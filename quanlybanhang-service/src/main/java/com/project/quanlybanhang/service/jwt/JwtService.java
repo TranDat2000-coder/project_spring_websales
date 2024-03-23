@@ -1,46 +1,58 @@
 package com.project.quanlybanhang.service.jwt;
 
-import com.project.quanlybanhang.response.UserPrinciple;
+import com.project.quanlybanhang.response.UserPrincipal;
 import io.jsonwebtoken.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Mục đích của class này là tạo ra token sau khi đăng nhập thành công
+ */
 
 @Component
+@Slf4j
 public class JwtService {
 
     /**
-     * Mục đích của class này là tạo ra token sau khi đăng nhập thành công
-     */
+     * Thời gian có hiệu lực của chuỗi jwt
+     **/
+    private static final long EXPIRE_TIME = 600000;
 
     /**
      * SECRET_KEY là bảo mật, chỉ có phía service biết
      */
     public static final String SECRET_KEY = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
-    /**
-     * Thời gian có hiệu lực của chuỗi jwt
-     **/
-    private static final long EXPIRE_TIME = 3600000;
-    private static final Logger logger = LoggerFactory.getLogger(JwtService.class.getName());
 
     /**
      * Tạo ra jwt từ thông tin user
      */
     public String generateToken(Authentication authentication) {
 
-        UserPrinciple userPrincipal = (UserPrinciple) authentication.getPrincipal();
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        Map<String, Object> claims = new HashMap<>();
         /**
          * Tạo chuỗi json web token từ username của user
          */
         return Jwts.builder()
-                .setSubject((userPrincipal.getUsername()))
-                .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + EXPIRE_TIME))
-                .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
+                .setClaims(claims)
+                .setSubject(userPrincipal.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRE_TIME))
+                .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    private Key getSignKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 
     public boolean validateJwtToken(String authToken) {
@@ -48,15 +60,15 @@ public class JwtService {
             Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException e){
-            logger.error("Invalid JWT signature -> Message: ", e);
+            log.info("Invalid JWT signature");
         } catch (MalformedJwtException e) {
-            logger.error("Invalid JWT token -> Message: ", e);
+            log.info("Invalid JWT token");
         } catch (ExpiredJwtException e) {
-            logger.error("Expired JWT token -> Message: ", e);
+            log.info("Expired JWT token");
         } catch (UnsupportedJwtException e) {
-            logger.error("Unsupported JWT token -> Message: ", e);
+            log.info("Unsupported JWT token");
         } catch (IllegalArgumentException e) {
-            logger.error("JWT claims string is empty -> Message: ", e);
+            log.info("JWT claims string is empty");
         }
 
         return false;
@@ -66,6 +78,7 @@ public class JwtService {
         return Jwts.parser()
                 .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)
-                .getBody().getSubject();
+                .getBody()
+                .getSubject();
     }
 }

@@ -1,17 +1,20 @@
 
+import React from "react";
+import { Route, Routes } from 'react-router-dom';
+import Sidebar from "./common/Sidebar";
+import Navbar from "./common/Navbar";
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/scss/bootstrap.scss';
 import '../../static/admin/css/style.css';
 import '../../static/admin/vendors/simple-line-icons/css/simple-line-icons.css';
 import '../../static/admin/font-awesome/css/font-awesome.min.css';
 import '../../static/admin/vendors/css/vendor.bundle.base.css';
-import React, { useEffect, useState } from "react";
-import Navbar from "./common/Navbar";
-import Sidebar from "./common/Sidebar";
-
+import Products from "./products/Products";
+import Category from "./category/Category";
 
 const HomeAdmin = () => {
 
-    console.log("có vào đây không");
-    const [content, useContent] = useState("Trần Đạt");
+
 
     return (
         <div className="container-scroller">
@@ -21,9 +24,10 @@ const HomeAdmin = () => {
                 <div className="main-panel">
                     <div className="content-wrapper">
                         <div className="row">
-                            <header className="jumbotron">
-                                <h3>{content}</h3>
-                            </header>
+                            <Routes>
+                                <Route path="products" element={<Products />} />
+                                <Route path="category" element={<Category />} />
+                            </Routes>
                         </div>
                     </div>
                 </div>

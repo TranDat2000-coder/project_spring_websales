@@ -7,7 +7,7 @@ import com.project.quanlybanhang.entity.Products;
 import com.project.quanlybanhang.exception.BusinessException;
 import com.project.quanlybanhang.repository.CateProductRepository;
 import com.project.quanlybanhang.repository.ProductRepository;
-import com.project.quanlybanhang.request.products.GetProductRequest;
+import com.project.quanlybanhang.request.products.ProductRequest;
 import com.project.quanlybanhang.request.products.UpdateProductRequest;
 import com.project.quanlybanhang.response.ProductResponse;
 import com.project.quanlybanhang.service.IProductService;
@@ -22,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.io.BufferedOutputStream;
 import java.io.FileNotFoundException;
@@ -42,13 +43,15 @@ public class ProductServiceImpl implements IProductService {
 	private final CateProductRepository cateProductRepository;
 
 	@Override
-	public List<ProductResponse> findAll(GetProductRequest productRequest) {
+	public List<ProductResponse> findAll(ProductRequest productRequest) {
 
 		try {
 			Pageable paging = PageRequest.of( Integer.parseInt(productRequest.getPageNo()) - 1, Integer.parseInt(productRequest.getPageSize()));
 			Page<Products> pageResult = productRepository.findAll(paging);
 
 			List<Products> product =  pageResult.getContent();
+
+
 
             return product.stream()
 					.map(productConvert::convertToModel)

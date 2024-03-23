@@ -1,7 +1,11 @@
 package com.project.quanlybanhang.common;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public enum ErrorCode {
 
+    TOKEN_EXPIRED("001","Token is expired"),
     UNAUTHORIZED("401", "Your access rights have expired, please re-authenticate"),
     INPUT_INVALID("203", "Input invalid"),
     ROLE_EXITS("501", "Role already exists"),
@@ -13,11 +17,6 @@ public enum ErrorCode {
 
     private String errorCode;
     private String message;
-
-    ErrorCode(String errorCode, String message){
-        this.errorCode = errorCode;
-        this.message = message;
-    }
 
     public String getErrorCode() {
         return errorCode;

@@ -6,12 +6,11 @@ import java.util.Optional;
 import com.project.quanlybanhang.common.ErrorCode;
 import com.project.quanlybanhang.entity.Role;
 import com.project.quanlybanhang.exception.BusinessException;
-import com.project.quanlybanhang.response.UserPrinciple;
+import com.project.quanlybanhang.response.UserPrincipal;
 import com.project.quanlybanhang.response.UserResponse;
 import com.project.quanlybanhang.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -82,7 +81,7 @@ public class UserServiceImpl implements IUserService {
 		User userDetail = usersRepository.findByUsername(username)
 				.orElseThrow(() -> new UsernameNotFoundException("User name not found" + username));
 
-		return UserPrinciple.build(userDetail);
+		return UserPrincipal.build(userDetail);
 	}
 
 	@Override

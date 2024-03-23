@@ -5,6 +5,8 @@ import com.project.quanlybanhang.request.products.UpdateProductRequest;
 import com.project.quanlybanhang.response.ProductResponse;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletResponse;
+
 @Component
 public class ProductConvert {
 
@@ -13,6 +15,7 @@ public class ProductConvert {
         return ProductResponse.builder()
                 .id(products.getId())
                 .namePhone(products.getNamePhone())
+                .image(products.getImage())
                 .shortDiscription(products.getShortDiscription())
                 .description(products.getDescription())
                 .price(products.getPrice())
